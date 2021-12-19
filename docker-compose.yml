@@ -15,9 +15,9 @@ services:
       # access to docker containers
       - /var/run/docker.sock:/var/run/docker.sock:ro
       # access to config file
-      - $PWD/traefik.yml:/etc/traefik.yml
+      - $PWD/traefik.yml:/etc/traefik/traefik.yml
       # access to access logs
-      - $PWD/access.log:/etc/access.log
+      - $PWD/access.log:/etc/traefik/access.log
     networks:
       - webgateway
 
