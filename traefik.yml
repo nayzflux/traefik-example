@@ -1,0 +1,50 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+# access log
+accessLog:
+  filePath: /etc/traefik/access.log
+  
+# dashboard
+# api:
+#  dashboard: true
+#  insecure: true
+
+# entypoint
+entryPoints:
+  # HTTP
+  web:
+    address: :80
+    http:
+      # redirection to HTTPS
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  # HTTPS
+  websecure:
+    address: :443
+
+# get tls certificates
+certificatesResolvers:
+  staging:
+    acme:
+      email: noreply@example.com
+      storage: /tls-certificates/acme.json
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      httpChallenge:
+        entryPoint: web 
+  production:
+    acme:
+      email: noreply@example.com
+      storage: /tls-certificates/acme.json
+      caServer: https://acme-v02.api.letsencrypt.org/directory
+      httpChallenge:
+        entryPoint: web
+
+# use docker
+providers:
+  docker:
+    # don't expose all container
+    exposedByDefault: false
