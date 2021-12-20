@@ -48,3 +48,4 @@ providers:
   docker:
     # don't expose all container
     exposedByDefault: false
+    network: webgateway
